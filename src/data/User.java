@@ -1,10 +1,11 @@
 package data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
 
     private String firstName;
     private String lastName;
@@ -14,6 +15,15 @@ public class User {
     private boolean gender;
     private List<Loan> loanList = new ArrayList<Loan>();
     private List<DebitCard> debitCardList = new ArrayList<DebitCard>();
+
+    public User(String firstName, String lastName, String eMail, String password, Date birthdate, boolean gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.eMail = eMail;
+        this.password = password;
+        this.birthdate = birthdate;
+        this.gender = gender;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -78,7 +88,6 @@ public class User {
     public void setDebitCardList(List<DebitCard> debitCardList) {
         this.debitCardList = debitCardList;
     }
-
 
     //In the future, for the output of lists, I will make separate methods, but for now...
     @Override

@@ -1,8 +1,9 @@
 package data;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class DebitCard {
+public class DebitCard implements Serializable {
 
     private double balance;
     private String cardNumber;

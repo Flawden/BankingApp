@@ -3,12 +3,15 @@ import data.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
-public class BankMenu {
+public class BankMenu implements Serializable {
 
     private Bank bank;
 
@@ -16,8 +19,8 @@ public class BankMenu {
         this.bank = bank;
     }
 
-    public void showStartMenu() {
-        int answer = 0;
+    public void showStartMenu() throws IOException {
+        String answer = "";
 
         System.out.println("Registration and authorization panel:");
         System.out.println("Select one: \n" +
@@ -25,30 +28,25 @@ public class BankMenu {
                 "2. Register\n" +
                 "3. Exit\n");
 
-        while (true) {
-            try(BufferedReader rd = new BufferedReader(new InputStreamReader(System.in))) {
-                answer = Integer.parseInt(rd.readLine());
-                break;
-            } catch (IOException e) {
-                System.out.println("Error. You should have entered a number");
-            }
-        }
+       BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
 
-        if(answer == 0 || answer == 3) {
-            System.exit(0);
-        } else if(answer == 1) {
+       answer = rd.readLine();
+
+        if(answer.equals("1")) {
             showLogin();
-        } else if(answer == 2) {
+        } else if(answer.equals("2")) {
             showRegister();
+        } else {
+            System.exit(0);
         }
     }
 
     public void showBankMenu() {
-        System.out.println("Select one: \n" +
+        System.out.println("\nSelect one: \n" +
                 "1. Show my info\n" +
                 "2. Create Loan\n" +
                 "3. Create Debit card\n" +
-                "4. Exit");
+                "4. Exit\n");
     }
 
     private void showLogin() {
@@ -76,6 +74,7 @@ public class BankMenu {
                 System.out.println("Incorrect login or password. Please, try again.");
             }
         }
+        showBankMenu();
 
     }
 
@@ -89,7 +88,9 @@ public class BankMenu {
         boolean gender = false;
 
         while (true) {
-            try(BufferedReader rd = new BufferedReader(new InputStreamReader(System.in))) {
+            try {
+                BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+
                 System.out.println("Enter your name");
                 firstName = rd.readLine();
 
@@ -115,16 +116,28 @@ public class BankMenu {
             }
         }
 
-        User user = new User();
+        User user = new User(firstName, lastName, eMail, password, birthdate, gender);
+        doRegister(user);
 
     }
 
     private boolean doLogin(String email, String password) {
-        return false;
+        List<User> users = bank.getUserList();
+        boolean isCorrect = false;
+        for (User user: users) {
+            if (user.geteMail().equals(email)) {
+                if(user.getPassword().equals(password)) {
+                    isCorrect = true;
+                    break;
+                }
+            }
+        }
+        return isCorrect;
     }
 
     private void doRegister(User user) {
-
+        bank.getUserList().add(user);
+        bank.serializeUsers(bank.getUserList());
     }
 
 }

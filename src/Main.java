@@ -6,6 +6,7 @@ public class Main {
         while (true) {
             bank.start();
         }
+
     }
 
 }

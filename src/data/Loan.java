@@ -1,8 +1,9 @@
 package data;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Loan {
+public class Loan implements Serializable {
 
     private Date issueDate;
     private double summ;
