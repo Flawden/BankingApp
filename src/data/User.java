@@ -6,6 +6,15 @@ import java.util.List;
 
 public class User {
 
+    private String firstName;
+    private String lastName;
+    private String eMail;
+    private String password;
+    private Date birthdate;
+    private boolean gender;
+    private List<Loan> loanList = new ArrayList<Loan>();
+    private List<DebitCard> debitCardList = new ArrayList<DebitCard>();
+
     public String getFirstName() {
         return firstName;
     }
@@ -70,14 +79,6 @@ public class User {
         this.debitCardList = debitCardList;
     }
 
-    private String firstName;
-    private String lastName;
-    private String eMail;
-    private String password;
-    private Date birthdate;
-    private boolean gender;
-    private List<Loan> loanList = new ArrayList<Loan>();
-    private List<DebitCard> debitCardList = new ArrayList<DebitCard>();
 
     //In the future, for the output of lists, I will make separate methods, but for now...
     @Override

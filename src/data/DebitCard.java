@@ -4,6 +4,11 @@ import java.util.Date;
 
 public class DebitCard {
 
+    private double balance;
+    private String cardNumber;
+    private Date expirationDate;
+    private int cvv;
+
     public double getBalance() {
         return balance;
     }
@@ -35,11 +40,6 @@ public class DebitCard {
     public void setCvv(int cvv) {
         this.cvv = cvv;
     }
-
-    private double balance;
-    private String cardNumber;
-    private Date expirationDate;
-    private int cvv;
 
     @Override
     public String toString() {

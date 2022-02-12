@@ -4,6 +4,12 @@ import java.util.Date;
 
 public class Loan {
 
+    private Date issueDate;
+    private double summ;
+    private double interestRate;
+    private double monthlyPayment;
+    private int creditTerm;
+
     public Date getIssueDate() {
         return issueDate;
     }
@@ -43,12 +49,6 @@ public class Loan {
     public void setCreditTerm(int creditTerm) {
         this.creditTerm = creditTerm;
     }
-
-    private Date issueDate;
-    private double summ;
-    private double interestRate;
-    private double monthlyPayment;
-    private int creditTerm;
 
     @Override
     public String toString() {
