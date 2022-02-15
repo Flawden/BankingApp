@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Bank implements Serializable {
 
+    static final long serialVersionUID = 812943703942L;
+
     private List<User> users;
 
     public List<User> getUserList() {
