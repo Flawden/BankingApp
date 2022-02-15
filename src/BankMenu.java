@@ -13,6 +13,7 @@ import java.util.List;
 
 public class BankMenu implements Serializable {
 
+    private User user;
     private Bank bank;
 
     BankMenu(Bank bank) {
@@ -42,11 +43,40 @@ public class BankMenu implements Serializable {
     }
 
     public void showBankMenu() {
-        System.out.println("\nSelect one: \n" +
-                "1. Show my info\n" +
-                "2. Create Loan\n" +
-                "3. Create Debit card\n" +
-                "4. Exit\n");
+
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+
+        while (true) {
+
+            String answer = "";
+
+            System.out.println("\nSelect one: \n" +
+                    "1. Show my info\n" +
+                    "2. Create Loan\n" +
+                    "3. Create Debit card\n" +
+                    "4. Exit\n");
+
+            try {
+                answer = rd.readLine();
+            } catch (IOException e) {
+                System.out.println("Incorrect value");
+            }
+
+            if (answer.equals("1")) {
+                //Invoke show method
+                System.out.println(user);
+            } else if (answer.equals("2")) {
+                // Indoke loan's creation method.
+            } else if (answer.equals("3")) {
+                // Invoke Debit card's creation method
+            } else if (answer.equals("4")) {
+                user = null;
+                break;
+            }
+
+        }
+
+
     }
 
     private void showLogin() {
@@ -128,6 +158,7 @@ public class BankMenu implements Serializable {
             if (user.geteMail().equals(email)) {
                 if(user.getPassword().equals(password)) {
                     isCorrect = true;
+                    this.user = user;
                     break;
                 }
             }
