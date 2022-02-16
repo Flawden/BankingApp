@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class Loan implements Serializable {
 
+    static final long serialVersionUID = 812943703942L;
     private Date issueDate;
     private double summ;
     private double interestRate;

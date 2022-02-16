@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class DebitCard implements Serializable {
 
+    static final long serialVersionUID = 812943703942L;
     private double balance;
     private String cardNumber;
     private Date expirationDate;
