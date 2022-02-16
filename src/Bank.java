@@ -15,14 +15,6 @@ public class Bank {
         return this.user;
     }
 
-    public List<User> getUserList() {
-        return users;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.users = userList;
-    }
-
     public void start() {
         deserializeUsers();
         BankMenu bm = new BankMenu(this);
