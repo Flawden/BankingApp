@@ -40,8 +40,10 @@ public class BankMenu {
             showLogin();
         } else if(answer.equals("2")) {
             showRegister();
-        } else {
+        } else if(answer.equals("3")) {
             System.exit(0);
+        } else {
+            System.out.println("Incorrect value. Please, try again!\n");
         }
     }
 
