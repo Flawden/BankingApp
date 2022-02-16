@@ -11,9 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class BankMenu implements Serializable {
+public class BankMenu {
 
-    private User user;
     private Bank bank;
 
     BankMenu(Bank bank) {
@@ -68,13 +67,13 @@ public class BankMenu implements Serializable {
 
             if (answer.equals("1")) {
                 //Invoke show method
-                System.out.println(user);
+                System.out.println(bank.getUser());
             } else if (answer.equals("2")) {
                 // Indoke loan's creation method.
             } else if (answer.equals("3")) {
                 // Invoke Debit card's creation method
             } else if (answer.equals("4")) {
-                user = null;
+                bank.userExit();
                 break;
             }
 
@@ -100,7 +99,7 @@ public class BankMenu implements Serializable {
                 }
 
 
-            isCorrect = doLogin(email, password);
+            isCorrect = bank.doLogin(email, password);
             if (isCorrect == true) {
                 break;
             } else {
@@ -153,27 +152,8 @@ public class BankMenu implements Serializable {
         }
 
         User user = new User(firstName, lastName, eMail, password, birthdate, gender);
-        doRegister(user);
+        bank.doRegister(user);
 
-    }
-
-    private boolean doLogin(String email, String password) {
-        boolean isCorrect = false;
-        for (User user: bank.getUserList()) {
-            if (user.geteMail().equals(email)) {
-                if(user.getPassword().equals(password)) {
-                    isCorrect = true;
-                    this.user = user;
-                    break;
-                }
-            }
-        }
-        return isCorrect;
-    }
-
-    private void doRegister(User user) {
-        bank.getUserList().add(user);
-        bank.serializeUsers(bank.getUserList());
     }
 
 }

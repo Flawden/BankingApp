@@ -4,12 +4,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bank implements Serializable {
+public class Bank {
 
-    static final long serialVersionUID = 812943703942L;
     private final String dataFile = "Users.dat";
 
     private List<User> users;
+    private User user;
+
+    public User getUser() {
+        return this.user;
+    }
 
     public List<User> getUserList() {
         return users;
@@ -46,4 +50,28 @@ public class Bank implements Serializable {
         }
 
     }
+
+    public boolean doLogin(String email, String password) {
+        boolean isCorrect = false;
+        for (User user: users) {
+            if (user.geteMail().equals(email)) {
+                if(user.getPassword().equals(password)) {
+                    isCorrect = true;
+                    this.user = user;
+                    break;
+                }
+            }
+        }
+        return isCorrect;
+    }
+
+    public void doRegister(User user) {
+        users.add(user);
+        serializeUsers(users);
+    }
+
+    public void userExit() {
+        user = null;
+    }
+
 }
