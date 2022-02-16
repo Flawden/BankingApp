@@ -21,11 +21,7 @@ public class Bank implements Serializable {
     public void start() {
         deserializeUsers();
         BankMenu bm = new BankMenu(this);
-        try {
-            bm.showStartMenu();
-        } catch (IOException e) {
-            System.out.println("Error");
-        }
+        bm.showStartMenu();
     }
 
     public void serializeUsers(List<User> users) {

@@ -20,7 +20,7 @@ public class BankMenu implements Serializable {
         this.bank = bank;
     }
 
-    public void showStartMenu() throws IOException {
+    public void showStartMenu() {
         String answer = "";
 
         System.out.println("Registration and authorization panel:");
@@ -31,7 +31,11 @@ public class BankMenu implements Serializable {
 
        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
 
-       answer = rd.readLine();
+        try {
+            answer = rd.readLine();
+        } catch (IOException e) {
+            System.out.println("Access error");
+        }
 
         if(answer.equals("1")) {
             showLogin();
@@ -76,7 +80,6 @@ public class BankMenu implements Serializable {
 
         }
 
-
     }
 
     private void showLogin() {
@@ -87,23 +90,26 @@ public class BankMenu implements Serializable {
         boolean isCorrect = false;
 
         while (isCorrect == false) {
-            while (true) {
                 try {
                     System.out.println("Enter your email");
                     email = rd.readLine();
                     System.out.println("Enter your password");
                     password = rd.readLine();
-                    break;
                 }catch (IOException e) {
                     System.out.println("Invalid value");
                 }
-            }
+
 
             isCorrect = doLogin(email, password);
-            if (isCorrect == false) {
+            if (isCorrect == true) {
+                break;
+            } else {
                 System.out.println("Incorrect login or password. Please, try again.");
             }
+
+
         }
+
         showBankMenu();
 
     }
@@ -152,9 +158,8 @@ public class BankMenu implements Serializable {
     }
 
     private boolean doLogin(String email, String password) {
-        List<User> users = bank.getUserList();
         boolean isCorrect = false;
-        for (User user: users) {
+        for (User user: bank.getUserList()) {
             if (user.geteMail().equals(email)) {
                 if(user.getPassword().equals(password)) {
                     isCorrect = true;
