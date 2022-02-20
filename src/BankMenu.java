@@ -105,7 +105,8 @@ public class BankMenu {
             if (isCorrect == true) {
                 break;
             } else {
-                System.out.println("Incorrect login or password. Please, try again.");
+                System.out.println("Incorrect login or password.");
+                return;
             }
 
 
