@@ -38,7 +38,8 @@ public class Bank {
         } catch (FileNotFoundException e) {
             this.users = new ArrayList<User>();
         } catch (IOException e) {
-            System.out.println("Access error");;
+            System.out.println("Access error");
+            ;
         } catch (ClassNotFoundException e) {
             System.out.println("Server error");
         }
@@ -47,9 +48,9 @@ public class Bank {
 
     public boolean doLogin(String email, String password) {
         boolean isCorrect = false;
-        for (User user: users) {
+        for (User user : users) {
             if (user.geteMail().equals(email)) {
-                if(user.getPassword().equals(password)) {
+                if (user.getPassword().equals(password)) {
                     isCorrect = true;
                     this.user = user;
                     break;
@@ -74,15 +75,15 @@ public class Bank {
 
         if (answer.equals("1")) {
 
-            isCorrect = createLoan(100_000,10_000_000, 12, 120, 9);
+            isCorrect = createLoan(100_000, 10_000_000, 12, 120, 9);
 
         } else if (answer.equals("2")) {
 
-            isCorrect = createLoan(1_000_000,5_000_000, 12, 240, 6);
+            isCorrect = createLoan(1_000_000, 5_000_000, 12, 240, 6);
 
         } else if (answer.equals("3")) {
 
-            isCorrect = createLoan(1_000,50_000, 1, 5, 25);
+            isCorrect = createLoan(1_000, 50_000, 1, 5, 25);
 
         } else if (answer.equals("4")) {
             return true;
@@ -111,7 +112,7 @@ public class Bank {
             System.out.println("Error");
         }
 
-        if(maxSum < sum && minSum > sum) {
+        if (maxSum < sum && minSum > sum) {
             System.out.println("You have entered an invalid amount. Read the terms of the loan again");
             return false;
         }
@@ -154,6 +155,7 @@ public class Bank {
         return sum;
     }
 
-    public void doCreditCard() {}
+    public void doCreditCard() {
+    }
 
 }

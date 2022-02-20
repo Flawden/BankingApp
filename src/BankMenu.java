@@ -1,6 +1,5 @@
 import data.User;
 
-import javax.xml.crypto.dom.DOMCryptoContext;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,7 +23,7 @@ public class BankMenu {
                 "2. Register\n" +
                 "3. Exit\n");
 
-       BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
 
         try {
             answer = rd.readLine();
@@ -32,11 +31,11 @@ public class BankMenu {
             System.out.println("Access error");
         }
 
-        if(answer.equals("1")) {
+        if (answer.equals("1")) {
             showLogin();
-        } else if(answer.equals("2")) {
+        } else if (answer.equals("2")) {
             showRegister();
-        } else if(answer.equals("3")) {
+        } else if (answer.equals("3")) {
             System.exit(0);
         } else {
             System.out.println("Incorrect value. Please, try again!\n");
@@ -87,14 +86,14 @@ public class BankMenu {
         boolean isCorrect = false;
 
         while (isCorrect == false) {
-                try {
-                    System.out.println("Enter your email");
-                    email = rd.readLine();
-                    System.out.println("Enter your password");
-                    password = rd.readLine();
-                }catch (IOException e) {
-                    System.out.println("Invalid value");
-                }
+            try {
+                System.out.println("Enter your email");
+                email = rd.readLine();
+                System.out.println("Enter your password");
+                password = rd.readLine();
+            } catch (IOException e) {
+                System.out.println("Invalid value");
+            }
 
 
             isCorrect = bank.doLogin(email, password);
@@ -113,7 +112,7 @@ public class BankMenu {
     }
 
     private void showRegister() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("DD.MM.YYYY");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String firstName = "";
         String lastName = "";
         String eMail = "";
@@ -166,17 +165,17 @@ public class BankMenu {
 
         while (isCorrect == false) {
 
-        showLoanList();
+            showLoanList();
 
-        try {
-            answer = rd.readLine();
-        } catch (IOException e) {
-            System.out.println("Error");
-        }
+            try {
+                answer = rd.readLine();
+            } catch (IOException e) {
+                System.out.println("Error");
+            }
 
-        System.out.println();
+            System.out.println();
 
-        isCorrect = bank.doLoan(answer);
+            isCorrect = bank.doLoan(answer);
         }
 
 
@@ -221,13 +220,13 @@ public class BankMenu {
 
         if (answer.equals("yes")) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
 
     }
 
-    private void showDebitCard() {}
+    private void showDebitCard() {
+    }
 
 }
