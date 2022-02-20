@@ -1,6 +1,7 @@
 package data;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,25 @@ public class User implements Serializable {
     private List<Loan> loanList = new ArrayList<Loan>();
     private List<DebitCard> debitCardList = new ArrayList<DebitCard>();
 
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    private double balance;
+
+
     public User(String firstName, String lastName, String eMail, String password, Date birthdate, boolean gender) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,7 +44,10 @@ public class User implements Serializable {
         this.password = password;
         this.birthdate = birthdate;
         this.gender = gender;
+        this.balance = 0;
     }
+
+
 
     public String getFirstName() {
         return firstName;
@@ -90,6 +113,7 @@ public class User implements Serializable {
         this.debitCardList = debitCardList;
     }
 
+
     //In the future, for the output of lists, I will make separate methods, but for now...
     @Override
     public String toString() {
@@ -100,7 +124,8 @@ public class User implements Serializable {
                 "Date of Birth: " + birthdate + "\n" +
                 "Gender: " + gender + "\n" +
                 "Loan list: " + loanList + "\n" +
-                "Debit Card List: " + debitCardList + "\n";
+                "Debit Card List: " + debitCardList + "\n\n" +
+                "Balance: " + balance + "\n";
     }
 
 }
