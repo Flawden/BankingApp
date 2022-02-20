@@ -1,10 +1,9 @@
+import data.DebitCard;
 import data.Loan;
 import data.User;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Bank {
 
@@ -13,6 +12,7 @@ public class Bank {
     private List<User> users;
     private User user;
     private BankMenu bankMenu = new BankMenu(this);
+    private HashSet<String> cardNumbers = new HashSet<String>();
 
     public User getUser() {
         return this.user;
@@ -156,7 +156,37 @@ public class Bank {
     }
 
     public void doCreditCard() {
+        String num = createCardNumber();
+        int cvv = createCVV();
+        user.getDebitCardList().add(new DebitCard(num, cvv));
+        serializeUsers(users);
+    }
 
+    public String createCardNumber() {
+        Random rnd = new Random();
+        int part = 0;
+        String num = "";
+
+        while (true) {
+            for (int i = 0; i < 4; i++) {
+                part = rnd.nextInt(1111,9999);
+                num += part + " ";
+            }
+            if (!cardNumbers.contains(num)) {
+                cardNumbers.add(num);
+                break;
+            }
+        }
+
+        return num;
+
+    }
+
+    public int createCVV() {
+        Random rnd = new Random();
+        int cvv = rnd.nextInt(111,999);
+
+        return cvv;
     }
 
 }

@@ -64,12 +64,11 @@ public class BankMenu {
             }
 
             if (answer.equals("1")) {
-                //Invoke show method
                 System.out.println(bank.getUser());
             } else if (answer.equals("2")) {
                 showLoan();
             } else if (answer.equals("3")) {
-                // Invoke Debit card's creation method
+                showDebitCard();
             } else if (answer.equals("4")) {
                 bank.userExit();
                 break;
@@ -297,6 +296,11 @@ public class BankMenu {
             return false;
         }
 
+    }
+
+    private void showDebitCard() {
+        bank.doCreditCard();
+        System.out.println("Debit card was generated.");
     }
 
 }

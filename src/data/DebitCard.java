@@ -60,7 +60,7 @@ public class DebitCard implements Serializable {
     public String toString() {
         return "Balance: " + balance + "\n" +
                 "Card number: " + cardNumber + "\n" +
-                "Expiration date: " + expirationDate + "\n" +
+                "Expiration date: " + simpleDateFormat.format(expirationDate) + "\n" +
                 "CVV code: " + cvv + "\n";
     }
 
