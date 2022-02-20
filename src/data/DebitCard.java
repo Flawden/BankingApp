@@ -1,11 +1,21 @@
 package data;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DebitCard implements Serializable {
 
     static final long serialVersionUID = 812943703942L;
+
+    public DebitCard(String cardNumber, Date expirationDate, int cvv) {
+        this.balance = 0;
+        this.cardNumber = cardNumber;
+        this.calendar.add(Calendar.YEAR, 1);
+        this.cvv = cvv;
+    }
+
+    private Calendar calendar = Calendar.getInstance();
     private double balance;
     private String cardNumber;
     private Date expirationDate;
