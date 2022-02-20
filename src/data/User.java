@@ -1,13 +1,17 @@
 package data;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class User implements Serializable {
 
     static final long serialVersionUID = 812943703942L;
+    private Calendar calendar = Calendar.getInstance();
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
     private String firstName;
     private String lastName;
     private String eMail;
@@ -119,7 +123,7 @@ public class User implements Serializable {
                 "Last name: " + lastName + "\n" +
                 "E-mail: " + eMail + "\n" +
                 "Password: " + password + "\n" +
-                "Date of Birth: " + birthdate + "\n" +
+                "Date of Birth: " + simpleDateFormat.format(birthdate) + "\n" +
                 "Gender: " + gender + "\n" +
                 "Loan list: " + loanList + "\n" +
                 "Debit Card List: " + debitCardList + "\n\n" +

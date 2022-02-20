@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class BankMenu {
@@ -112,6 +113,11 @@ public class BankMenu {
     }
 
     private void showRegister() {
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        Calendar calendar = Calendar.getInstance();
+        int day = 0;
+        int month = 0;
+        int year = 0;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String firstName = "";
         String lastName = "";
@@ -122,32 +128,99 @@ public class BankMenu {
 
         while (true) {
             try {
-                BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
-
                 System.out.println("Enter your name");
                 firstName = rd.readLine();
+            } catch (IOException e) {
+                System.out.println("Server Error");
+            }
 
-                System.out.println("Enter your last name");
-                lastName = rd.readLine();
-
-                System.out.println("Enter your E-mail");
-                eMail = rd.readLine();
-
-                System.out.println("Enter your password");
-                password = rd.readLine();
-
-                System.out.println("Enter your birthday date. DD.MM.YYYY");
-                birthdate = dateFormat.parse(rd.readLine());
-
-                System.out.println("Enter your Gender (0 for Male, 1 for Female)");
-                gender = Boolean.parseBoolean(rd.readLine());
-
+            if (!firstName.matches("[а-яёА-ЯЁa-zA-Z]+")) {
+                System.out.println("The name cannot contain numbers or special characters");
+            } else {
                 break;
-
-            } catch (Exception e) {
-                System.out.println("Invalid value");
             }
         }
+        while (true) {
+            try {
+                System.out.println("Enter your last name");
+                lastName = rd.readLine();
+            } catch (IOException e) {
+                System.out.println("Server Error");
+            }
+
+            if (!lastName.matches("[а-яёА-ЯЁa-zA-Z]+")) {
+                System.out.println("The name cannot contain numbers or special characters");
+            } else {
+                break;
+            }
+        }
+        while (true) {
+            try {
+                System.out.println("Enter your E-mail");
+                eMail = rd.readLine();
+            } catch (IOException e) {
+                System.out.println("Error");
+            }
+
+            if (!eMail.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+                System.out.println("Incorrect E-mail. An example of a valid E-mail: Example@ex.ru");
+            } else {
+                break;
+            }
+
+        }
+        try {
+                System.out.println("Enter your password");
+                password = rd.readLine();
+            } catch (IOException e) {
+                System.out.println("Error");
+            }
+        while (true) {
+                try {
+                    System.out.println("Enter your birthday day.");
+                    day = Integer.parseInt(rd.readLine());
+                    break;
+                } catch (IOException e) {
+                    System.out.println("Server error");
+                } catch (NumberFormatException e) {
+                    System.out.println("Incorrect day. Try again");
+                }
+            }
+        while (true) {
+                try {
+                    System.out.println("Enter your birthday month.");
+                    month = Integer.parseInt(rd.readLine());
+                    break;
+                } catch (IOException e) {
+                    System.out.println("Server error");
+                } catch (NumberFormatException e) {
+                    System.out.println("Incorrect month. Try again");
+                }
+            }
+        while (true) {
+                try {
+                    System.out.println("Enter your birthday year.");
+                    year = Integer.parseInt(rd.readLine());
+                    break;
+                } catch (IOException e) {
+                    System.out.println("Server error");
+                } catch (NumberFormatException e) {
+                    System.out.println("Incorrect year. Try again");
+                }
+            }
+
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+
+        birthdate = calendar.getTime();
+
+        try {
+                System.out.println("Enter your Gender (0 for Male, 1 for Female)");
+                gender = Boolean.parseBoolean(rd.readLine());
+            } catch (IOException e) {
+                System.out.println("Error");
+            }
 
         User user = new User(firstName, lastName, eMail, password, birthdate, gender);
         bank.doRegister(user);
