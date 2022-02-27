@@ -37,6 +37,7 @@ public class Bank {
             this.users = (ArrayList<User>) os.readObject();
         } catch (FileNotFoundException e) {
             this.users = new ArrayList<User>();
+            createSuperUser();
         } catch (IOException e) {
             System.out.println("Access error");
             ;
@@ -44,6 +45,11 @@ public class Bank {
             System.out.println("Server error");
         }
 
+    }
+
+    private void createSuperUser() {
+        user = new User("Admin", "Admin", "Admin@admin.ru", "Admin", new Date(), false, true);
+        users.add(user);
     }
 
     public boolean doLogin(String email, String password) {

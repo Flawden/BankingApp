@@ -18,6 +18,7 @@ public class User implements Serializable {
     private String password;
     private Date birthdate;
     private boolean gender;
+    private boolean isAdmin;
     private List<Loan> loanList = new ArrayList<Loan>();
     private List<DebitCard> debitCardList = new ArrayList<DebitCard>();
 
@@ -48,6 +49,17 @@ public class User implements Serializable {
         this.birthdate = birthdate;
         this.gender = gender;
         this.balance = 0;
+        isAdmin = false;
+    }
+    public User(String firstName, String lastName, String eMail, String password, Date birthdate, boolean gender, boolean isAdmin) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.eMail = eMail;
+        this.password = password;
+        this.birthdate = birthdate;
+        this.gender = gender;
+        this.balance = 0;
+        this.isAdmin = isAdmin;
     }
 
 
@@ -93,6 +105,10 @@ public class User implements Serializable {
 
     public boolean isGender() {
         return gender;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
     public void setGender(boolean gender) {

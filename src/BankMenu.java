@@ -50,12 +50,20 @@ public class BankMenu {
         while (true) {
 
             String answer = "";
+            boolean isAdmin = bank.getUser().isAdmin();
 
             System.out.println("\nSelect one: \n" +
                     "1. Show my info\n" +
                     "2. Create Loan\n" +
-                    "3. Create Debit card\n" +
-                    "4. Exit\n");
+                    "3. Create Debit card");
+
+            if (isAdmin) {
+                System.out.println("4. Show statistics");
+                System.out.println("5. Exit\n");
+            } else {
+                System.out.println("4. Exit\n");
+            }
+
 
             try {
                 answer = rd.readLine();
@@ -69,7 +77,11 @@ public class BankMenu {
                 showLoan();
             } else if (answer.equals("3")) {
                 showDebitCard();
-            } else if (answer.equals("4")) {
+            } else if (answer.equals("4") && isAdmin) {
+
+                System.out.println("Hello, i'm statistics\n");
+
+            } else if (answer.equals("4") || (answer.equals("5") && isAdmin)) {
                 bank.userExit();
                 break;
             }
