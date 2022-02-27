@@ -10,6 +10,7 @@ public class Bank {
     private final String dataFile = "Users.dat";
 
     private List<User> users;
+    private Calendar calendar = Calendar.getInstance();
     private User user;
     private BankMenu bankMenu = new BankMenu(this);
     private HashSet<String> cardNumbers = new HashSet<String>();
@@ -50,6 +51,22 @@ public class Bank {
     private void createSuperUser() {
         user = new User("Admin", "Admin", "Admin@admin.ru", "Admin", new Date(), false, true);
         users.add(user);
+    }
+
+    public void showLastDayUserCreated() {
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        Date nowTime = calendar.getTime();
+        calendar = Calendar.getInstance();
+
+        users.stream().filter(x -> x.getCreatedDate().after(nowTime)).forEach(System.out::println);
+    }
+
+    public void showUsersWithCredits() {
+        users.stream().sorted().forEach(System.out::println);
+    }
+    public void showUsersWithDebitCard() {
+        PersonByDebitCardComparator comparator = new PersonByDebitCardComparator();
+        users.stream().sorted(comparator).forEach(System.out::println);
     }
 
     public boolean doLogin(String email, String password) {

@@ -78,15 +78,48 @@ public class BankMenu {
             } else if (answer.equals("3")) {
                 showDebitCard();
             } else if (answer.equals("4") && isAdmin) {
-
-                System.out.println("Hello, i'm statistics\n");
-
+                showStatistics();
             } else if (answer.equals("4") || (answer.equals("5") && isAdmin)) {
                 bank.userExit();
                 break;
             }
 
         }
+
+    }
+
+    private void showStatistics() {
+
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        String answer = "";
+
+        while (true) {
+            System.out.println("1) List of created users in the last 24 hours\n" +
+                    "2) List of users by number of credits\n" +
+                    "3) List of users grouped by number of cards\n" +
+                    "4) Exit. \n");
+
+            try {
+                answer = rd.readLine();
+            } catch (IOException e) {
+                System.out.println("Error");
+            }
+
+            if(answer.equals("1")) {
+                bank.showLastDayUserCreated();
+            } else if (answer.equals("2")) {
+                bank.showUsersWithCredits();
+            } else if (answer.equals("3")) {
+                bank.showUsersWithDebitCard();
+            } else if (answer.equals("4")) {
+                break;
+            } else {
+                System.out.println("Incorrect value. Try again.");
+            }
+
+        }
+
+
 
     }
 

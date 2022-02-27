@@ -10,6 +10,7 @@ public class DebitCard implements Serializable {
     static final long serialVersionUID = 812943703942L;
 
     public DebitCard(String cardNumber, int cvv) {
+        this.createdDate = calendar.getTime();
         this.balance = 0;
         this.cardNumber = cardNumber;
         this.calendar.add(Calendar.YEAR, 1);
@@ -18,6 +19,7 @@ public class DebitCard implements Serializable {
     }
 
     private Calendar calendar = Calendar.getInstance();
+    private Date createdDate;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
     private double balance;
     private String cardNumber;
@@ -27,6 +29,8 @@ public class DebitCard implements Serializable {
     public double getBalance() {
         return balance;
     }
+
+    public Date getCreatedDate() {return createdDate;}
 
     public void setBalance(double balance) {
         this.balance = balance;

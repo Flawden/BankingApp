@@ -7,10 +7,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class User implements Serializable {
+public class User implements Serializable, Comparable<User> {
 
     static final long serialVersionUID = 812943703942L;
     private Calendar calendar = Calendar.getInstance();
+    private Date createdDate;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
     private String firstName;
     private String lastName;
@@ -24,6 +25,10 @@ public class User implements Serializable {
 
     public Date getBirthdate() {
         return birthdate;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
     public void setBirthdate(Date birthdate) {
@@ -50,6 +55,7 @@ public class User implements Serializable {
         this.gender = gender;
         this.balance = 0;
         isAdmin = false;
+        createdDate = calendar.getTime();
     }
     public User(String firstName, String lastName, String eMail, String password, Date birthdate, boolean gender, boolean isAdmin) {
         this.firstName = firstName;
@@ -60,6 +66,7 @@ public class User implements Serializable {
         this.gender = gender;
         this.balance = 0;
         this.isAdmin = isAdmin;
+        createdDate = calendar.getTime();
     }
 
 
@@ -146,4 +153,8 @@ public class User implements Serializable {
                 "Balance: " + balance + "\n";
     }
 
+    @Override
+    public int compareTo(User o) {
+        return o.loanList.size() - loanList.size();
+    }
 }
