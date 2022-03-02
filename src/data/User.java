@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class User implements Serializable, Comparable<User> {
+public class User implements Serializable {
 
     static final long serialVersionUID = 812943703942L;
     private Calendar calendar = Calendar.getInstance();
@@ -57,6 +57,7 @@ public class User implements Serializable, Comparable<User> {
         isAdmin = false;
         createdDate = calendar.getTime();
     }
+
     public User(String firstName, String lastName, String eMail, String password, Date birthdate, boolean gender, boolean isAdmin) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -68,7 +69,6 @@ public class User implements Serializable, Comparable<User> {
         this.isAdmin = isAdmin;
         createdDate = calendar.getTime();
     }
-
 
     public String getFirstName() {
         return firstName;
@@ -138,8 +138,6 @@ public class User implements Serializable, Comparable<User> {
         this.debitCardList = debitCardList;
     }
 
-
-    //In the future, for the output of lists, I will make separate methods, but for now...
     @Override
     public String toString() {
         return "First name: " + firstName + "\n" +
@@ -153,8 +151,4 @@ public class User implements Serializable, Comparable<User> {
                 "Balance: " + balance + "\n";
     }
 
-    @Override
-    public int compareTo(User o) {
-        return o.loanList.size() - loanList.size();
-    }
 }

@@ -62,11 +62,11 @@ public class Bank {
     }
 
     public void showUsersWithCredits() {
-        users.stream().sorted().forEach(System.out::println);
+        users.stream().sorted(Comparator.comparingInt((User u) -> u.getLoanList().size())).forEach(System.out::println);
     }
+
     public void showUsersWithDebitCard() {
-        PersonByDebitCardComparator comparator = new PersonByDebitCardComparator();
-        users.stream().sorted(comparator).forEach(System.out::println);
+        users.stream().sorted(Comparator.comparingInt((User u) -> u.getDebitCardList().size())).forEach(System.out::println);
     }
 
     public boolean doLogin(String email, String password) {

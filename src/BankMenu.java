@@ -119,8 +119,6 @@ public class BankMenu {
 
         }
 
-
-
     }
 
     private void showLogin() {
