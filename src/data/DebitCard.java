@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class DebitCard implements Serializable {
 
-    static final long serialVersionUID = 812943703942L;
+    private static final long serialVersionUID = 812943703942L;
     private Calendar calendar = Calendar.getInstance();
     private Date createdDate;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");

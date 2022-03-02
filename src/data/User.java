@@ -9,8 +9,8 @@ import java.util.List;
 
 public class User implements Serializable {
 
-    static final long serialVersionUID = 812943703942L;
-    private Calendar calendar = Calendar.getInstance();
+    private static final long serialVersionUID = 812943703942L;
+    private double balance;
     private Date createdDate;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
     private String firstName;
@@ -43,8 +43,6 @@ public class User implements Serializable {
         this.balance = balance;
     }
 
-    private double balance;
-
 
     public User(String firstName, String lastName, String eMail, String password, Date birthdate, boolean gender) {
         this.firstName = firstName;
@@ -55,7 +53,7 @@ public class User implements Serializable {
         this.gender = gender;
         this.balance = 0;
         isAdmin = false;
-        createdDate = calendar.getTime();
+        createdDate = new Date();
     }
 
     public User(String firstName, String lastName, String eMail, String password, Date birthdate, boolean gender, boolean isAdmin) {
@@ -67,7 +65,7 @@ public class User implements Serializable {
         this.gender = gender;
         this.balance = 0;
         this.isAdmin = isAdmin;
-        createdDate = calendar.getTime();
+        createdDate = new Date();
     }
 
     public String getFirstName() {

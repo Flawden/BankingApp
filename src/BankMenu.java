@@ -9,9 +9,9 @@ import java.util.Date;
 
 public class BankMenu {
 
-    private Bank bank;
+    private final Bank bank;
 
-    BankMenu(Bank bank) {
+    public BankMenu(Bank bank) {
         this.bank = bank;
     }
 
@@ -50,7 +50,7 @@ public class BankMenu {
         while (true) {
 
             String answer = "";
-            boolean isAdmin = bank.getUser().isAdmin();
+            boolean isAdmin = bank.getIsAdmin();
 
             System.out.println("\nSelect one: \n" +
                     "1. Show my info\n" +
@@ -78,7 +78,7 @@ public class BankMenu {
             } else if (answer.equals("3")) {
                 showDebitCard();
             } else if (answer.equals("4") && isAdmin) {
-                showStatistics();
+                bank.showStatistics();
             } else if (answer.equals("4") || (answer.equals("5") && isAdmin)) {
                 bank.userExit();
                 break;
@@ -88,37 +88,11 @@ public class BankMenu {
 
     }
 
-    private void showStatistics() {
-
-        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
-        String answer = "";
-
-        while (true) {
-            System.out.println("1) List of created users in the last 24 hours\n" +
-                    "2) List of users by number of credits\n" +
-                    "3) List of users grouped by number of cards\n" +
-                    "4) Exit. \n");
-
-            try {
-                answer = rd.readLine();
-            } catch (IOException e) {
-                System.out.println("Error");
-            }
-
-            if(answer.equals("1")) {
-                bank.showLastDayUserCreated();
-            } else if (answer.equals("2")) {
-                bank.showUsersWithCredits();
-            } else if (answer.equals("3")) {
-                bank.showUsersWithDebitCard();
-            } else if (answer.equals("4")) {
-                break;
-            } else {
-                System.out.println("Incorrect value. Try again.");
-            }
-
-        }
-
+    public void printStatistics() {
+        System.out.println("1) List of created users in the last 24 hours\n" +
+                "2) List of users by number of credits\n" +
+                "3) List of users grouped by number of cards\n" +
+                "4) Exit. \n");
     }
 
     private void showLogin() {
@@ -156,18 +130,21 @@ public class BankMenu {
 
     private void showRegister() {
         BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
-        Calendar calendar = Calendar.getInstance();
-        int day = 0;
-        int month = 0;
-        int year = 0;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        String firstName = "";
-        String lastName = "";
-        String eMail = "";
-        String password = "";
-        Date birthdate;
-        boolean gender = false;
 
+        String firstName = enterName();
+        String lastName = enterLastName();
+        String eMail = enterEmail();
+        String password = enterPassword();
+        Date birthdate = enterBirthDate();
+        boolean gender = enterGender();
+
+        User user = new User(firstName, lastName, eMail, password, birthdate, gender);
+        bank.doRegister(user);
+    }
+
+    private String enterName() {
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        String firstName = "";
         while (true) {
             try {
                 System.out.println("Enter your name");
@@ -182,6 +159,13 @@ public class BankMenu {
                 break;
             }
         }
+
+        return firstName;
+    }
+
+    private String enterLastName() {
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        String lastName = "";
         while (true) {
             try {
                 System.out.println("Enter your last name");
@@ -196,6 +180,13 @@ public class BankMenu {
                 break;
             }
         }
+
+        return lastName;
+    }
+
+    private String enterEmail() {
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        String eMail = "";
         while (true) {
             try {
                 System.out.println("Enter your E-mail");
@@ -211,62 +202,85 @@ public class BankMenu {
             }
 
         }
+
+        return eMail;
+    }
+
+    private String enterPassword() {
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        String password = "";
+
         try {
-                System.out.println("Enter your password");
-                password = rd.readLine();
+            System.out.println("Enter your password");
+            password = rd.readLine();
+        } catch (IOException e) {
+            System.out.println("Error");
+        }
+
+        return  password;
+    }
+
+    private Date enterBirthDate() {
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Calendar calendar = Calendar.getInstance();
+        int day = 0;
+        int month = 0;
+        int year = 0;
+
+        while (true) {
+            try {
+                System.out.println("Enter your birthday day.");
+                day = Integer.parseInt(rd.readLine());
+                break;
             } catch (IOException e) {
-                System.out.println("Error");
+                System.out.println("Server error");
+            } catch (NumberFormatException e) {
+                System.out.println("Incorrect day. Try again");
             }
+        }
         while (true) {
-                try {
-                    System.out.println("Enter your birthday day.");
-                    day = Integer.parseInt(rd.readLine());
-                    break;
-                } catch (IOException e) {
-                    System.out.println("Server error");
-                } catch (NumberFormatException e) {
-                    System.out.println("Incorrect day. Try again");
-                }
+            try {
+                System.out.println("Enter your birthday month.");
+                month = Integer.parseInt(rd.readLine());
+                break;
+            } catch (IOException e) {
+                System.out.println("Server error");
+            } catch (NumberFormatException e) {
+                System.out.println("Incorrect month. Try again");
             }
+        }
         while (true) {
-                try {
-                    System.out.println("Enter your birthday month.");
-                    month = Integer.parseInt(rd.readLine());
-                    break;
-                } catch (IOException e) {
-                    System.out.println("Server error");
-                } catch (NumberFormatException e) {
-                    System.out.println("Incorrect month. Try again");
-                }
+            try {
+                System.out.println("Enter your birthday year.");
+                year = Integer.parseInt(rd.readLine());
+                break;
+            } catch (IOException e) {
+                System.out.println("Server error");
+            } catch (NumberFormatException e) {
+                System.out.println("Incorrect year. Try again");
             }
-        while (true) {
-                try {
-                    System.out.println("Enter your birthday year.");
-                    year = Integer.parseInt(rd.readLine());
-                    break;
-                } catch (IOException e) {
-                    System.out.println("Server error");
-                } catch (NumberFormatException e) {
-                    System.out.println("Incorrect year. Try again");
-                }
-            }
+        }
 
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month - 1);
         calendar.set(Calendar.DAY_OF_MONTH, day);
 
-        birthdate = calendar.getTime();
+        return calendar.getTime();
+    }
+
+    private boolean enterGender() {
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        boolean gender = false;
 
         try {
-                System.out.println("Enter your Gender (0 for Male, 1 for Female)");
-                gender = Boolean.parseBoolean(rd.readLine());
-            } catch (IOException e) {
-                System.out.println("Error");
-            }
+            System.out.println("Enter your Gender (0 for Male, 1 for Female)");
+            gender = Boolean.parseBoolean(rd.readLine());
+        } catch (IOException e) {
+            System.out.println("Error");
+        }
 
-        User user = new User(firstName, lastName, eMail, password, birthdate, gender);
-        bank.doRegister(user);
-
+        return gender;
     }
 
     private void showLoan() {

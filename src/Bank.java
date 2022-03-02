@@ -10,7 +10,6 @@ public class Bank {
     private final String dataFile = "Users.dat";
 
     private List<User> users;
-    private Calendar calendar = Calendar.getInstance();
     private User user;
     private BankMenu bankMenu = new BankMenu(this);
     private HashSet<String> cardNumbers = new HashSet<String>();
@@ -19,14 +18,15 @@ public class Bank {
         return this.user;
     }
 
+    public boolean getIsAdmin() {return user.isAdmin();}
+
     public void start() {
         deserializeUsers();
         bankMenu.showStartMenu();
     }
 
-    public void serializeUsers(List<User> users) {
-        try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(dataFile));
+    private void serializeUsers(List<User> users) {
+        try(ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(dataFile))) {
             os.writeObject(users);
         } catch (IOException e) {
             System.out.println("Error.");
@@ -39,10 +39,10 @@ public class Bank {
         } catch (FileNotFoundException e) {
             this.users = new ArrayList<User>();
             createSuperUser();
+            serializeUsers(users);
         } catch (IOException e) {
             System.out.println("Access error");
-            ;
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             System.out.println("Server error");
         }
 
@@ -53,16 +53,51 @@ public class Bank {
         users.add(user);
     }
 
+    public void showStatistics() {
+
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        String answer = "";
+
+        while (true) {
+
+            bankMenu.printStatistics();
+
+            try {
+                answer = rd.readLine();
+            } catch (IOException e) {
+                System.out.println("Error");
+            }
+
+            if(answer.equals("1")) {
+                showLastDayUserCreated();
+            } else if (answer.equals("2")) {
+                showUsersWithCredits();
+            } else if (answer.equals("3")) {
+                showUsersWithDebitCard();
+            } else if (answer.equals("4")) {
+                break;
+            } else {
+                System.out.println("Incorrect value. Try again.");
+            }
+
+        }
+
+    }
+
     public void showLastDayUserCreated() {
+        Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -1);
         Date nowTime = calendar.getTime();
-        calendar = Calendar.getInstance();
 
-        users.stream().filter(x -> x.getCreatedDate().after(nowTime)).forEach(System.out::println);
+        users.stream()
+                .filter(x -> x.getCreatedDate().after(nowTime))
+                .forEach(System.out::println);
     }
 
     public void showUsersWithCredits() {
-        users.stream().sorted(Comparator.comparingInt((User u) -> u.getLoanList().size())).forEach(System.out::println);
+        users.stream()
+                .sorted(Comparator.comparingInt((User u) -> u.getLoanList().size()))
+                .forEach(System.out::println);
     }
 
     public void showUsersWithDebitCard() {
@@ -72,12 +107,10 @@ public class Bank {
     public boolean doLogin(String email, String password) {
         boolean isCorrect = false;
         for (User user : users) {
-            if (user.geteMail().equals(email)) {
-                if (user.getPassword().equals(password)) {
-                    isCorrect = true;
-                    this.user = user;
-                    break;
-                }
+            if (user.geteMail().equals(email) && user.getPassword().equals(password)) {
+                isCorrect = true;
+                this.user = user;
+                break;
             }
         }
         return isCorrect;

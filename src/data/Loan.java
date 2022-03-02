@@ -7,9 +7,8 @@ import java.util.Date;
 
 public class Loan implements Serializable {
 
-    static final long serialVersionUID = 812943703942L;
+    private static final long serialVersionUID = 812943703942L;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-    private Calendar calendar = Calendar.getInstance();
     private Date issueDate;
     private double summ;
     private double interestRate;
@@ -17,7 +16,7 @@ public class Loan implements Serializable {
     private int creditTerm;
 
     public Loan(Date issueDate, double summ, double interestRate, double monthlyPayment, int creditTerm) {
-        this.issueDate = calendar.getTime();
+        this.issueDate = new Date();
         this.summ = summ;
         this.interestRate = interestRate;
         this.monthlyPayment = monthlyPayment;
